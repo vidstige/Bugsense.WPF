@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Threading;
+﻿using System.Diagnostics;
+using System.Windows;
+using System;
 
 namespace Bugsense.WPF
 {
@@ -13,12 +14,22 @@ namespace Bugsense.WPF
             errorSender = new ErrorSender(apiKey);
             informationCollector = new CrashInformationCollector();
 
-            app.DispatcherUnhandledException += UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += UnhandledException;
         }
 
-        private static void UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            errorSender.Send(informationCollector.CreateCrashReport(e.Exception));
+            // Don't send exceptions when the debugger is attached
+            if (!Debugger.IsAttached)
+            {
+                SendException((Exception) e.ExceptionObject);
+            }
+            Environment.Exit(-1);
+        }
+
+        private static void SendException(Exception exception)
+        {
+            errorSender.Send(informationCollector.CreateCrashReport(exception));
         }
     }
 }
