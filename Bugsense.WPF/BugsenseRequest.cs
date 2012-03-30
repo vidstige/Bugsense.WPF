@@ -8,16 +8,16 @@ namespace Bugsense.WPF
     {
         internal Exception OriginalException { get; set; }
         [DataMember(Name = "message")]
-        public string Name { get; set; }
+        public string Message { get; set; }
         [DataMember(Name = "backtrace")]
         public string StackTrace { get; set; }
         [DataMember(Name = "occured_at")]
         public DateTime DateOccured { get; set; }
         [DataMember(Name = "klass")]
-        public string ClassName { get; set; }
-        [DataMember(Name = "where")]
-        public string Where { get; set; }
-        public string Comment { get; set; }
+        public string ExceptionType { get; set; }
+        //[DataMember(Name = "where")]
+        //public string Where { get; set; }
+        //public string Comment { get; set; }
     }
 
     [DataContract]
@@ -31,29 +31,29 @@ namespace Bugsense.WPF
         public string AppName { get; set; }
         [DataMember(Name = "osver")]
         public string OsVersion { get; set; }
-        [DataMember(Name = "wifi_on")]
-        public string WifiOn { get; set; }
-        [DataMember(Name = "gps_on")]
-        public string GpsOn { get; set; }
-        [DataMember(Name = "screen:width")]
-        public double ScreenWidth { get; set; }
-        [DataMember(Name = "screen:height")]
-        public double ScreenHeight { get; set; }
-        [DataMember(Name = "screen:orientation")]
-        public string ScreenOrientation { get; set; }
-        [DataMember(Name = "screen_dpi(x:y)")]
-        public string ScreenDpi { get; set; }
+        //[DataMember(Name = "wifi_on")]
+        //public string WifiOn { get; set; }
+        //[DataMember(Name = "gps_on")]
+        //public string GpsOn { get; set; }
+        //[DataMember(Name = "screen:width")]
+        //public double ScreenWidth { get; set; }
+        //[DataMember(Name = "screen:height")]
+        //public double ScreenHeight { get; set; }
+        //[DataMember(Name = "screen:orientation")]
+        //public string ScreenOrientation { get; set; }
+        //[DataMember(Name = "screen_dpi(x:y)")]
+        //public string ScreenDpi { get; set; }
     }
 
     [DataContract]
     public class BugSenseRequest
     {
         public BugSenseRequest() { }
-        public BugSenseRequest(BugSenseEx ex, AppEnvironment environment)
+        public BugSenseRequest(BugSenseEx ex, AppEnvironment environment, BugSenseClient bugSenseClient)
         {
             Client = new BugSenseClient();
             Request = new BugSenseInternalRequest();
-            Request.Comment = string.IsNullOrEmpty(ex.Comment) ? ex.Name : ex.Comment;
+            //Request.Comment = string.IsNullOrEmpty(ex.Comment) ? ex.Message : ex.Comment;
             Exception = ex;
             AppEnvironment = environment;
         }
@@ -73,8 +73,8 @@ namespace Bugsense.WPF
 
         public BugSenseClient()
         {
-            Version = "bugsense-version-0.6";
-            Name = "bugsense-wp7";
+            //Version = "bugsense-version-0.6";
+            //Name = "bugsense-wp7";
         }
 
         [DataMember(Name = "version")]
