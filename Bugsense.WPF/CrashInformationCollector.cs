@@ -9,6 +9,7 @@ namespace Bugsense.WPF
         {
             // TODO: Handle inner exceptions?
             var entryAssemblyName = Assembly.GetEntryAssembly().GetName();
+            var operatingSystem = Environment.OSVersion;
 
             return new BugSenseRequest(
                 new BugSenseEx
@@ -22,7 +23,7 @@ namespace Bugsense.WPF
                     {
                         AppName = entryAssemblyName.Name,
                         AppVersion = entryAssemblyName.Version.ToString(4),
-                        OsVersion = "7.0.7389"
+                        OsVersion = operatingSystem.Version.ToString(4)
                     }
                 );
         }

@@ -1,20 +1,34 @@
 ﻿using System;
-using System.Windows.Input;
+using System.Threading;
 
 namespace SampleApplication
 {
-    public class CrashCommand: ICommand
+    public static class CrashHelper
     {
-        public void Execute(object parameter)
+        public static void Crash()
         {
-            throw new NotImplementedException("Thrown intentionally");
+            throw new ArgumentException("Thrown intentionally");
+        }
+    }
+
+    public class CrashCommand : AlwaysExecutableCommand
+    {
+        public override void Execute(object parameter)
+        {
+            CrashHelper.Crash();
+        }
+    }
+
+    public class BackgroundCrashCommand : AlwaysExecutableCommand
+    {
+        public override void Execute(object parameter)
+        {
+            ThreadPool.QueueUserWorkItem(Crash);
         }
 
-        public bool CanExecute(object parameter)
+        private void Crash(object state)
         {
-            return true;
+            CrashHelper.Crash();
         }
-
-        public event EventHandler CanExecuteChanged;
     }
 }

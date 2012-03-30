@@ -5,8 +5,10 @@
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
         <SampleApplication:CrashCommand x:Key="CrashCommand" />
+        <SampleApplication:BackgroundCrashCommand x:Key="BackgroundCrashCommand" />
     </Window.Resources>
-    <Grid>
-        <Button Command="{StaticResource ResourceKey=CrashCommand}"></Button>        
-    </Grid>
+    <StackPanel>
+        <Button Command="{StaticResource ResourceKey=CrashCommand}">Crash!</Button>
+        <Button Command="{StaticResource ResourceKey=BackgroundCrashCommand}">Background Crash!</Button>
+    </StackPanel>
 </Window>
