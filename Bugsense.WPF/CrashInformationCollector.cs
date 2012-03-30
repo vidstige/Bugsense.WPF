@@ -8,7 +8,7 @@ namespace Bugsense.WPF
         public BugSenseRequest CreateCrashReport(Exception exception)
         {
             // TODO: Handle inner exceptions?
-            var name = Assembly.GetExecutingAssembly().GetName();
+            var entryAssemblyName = Assembly.GetEntryAssembly().GetName();
 
             return new BugSenseRequest(
                 new BugSenseEx
@@ -20,8 +20,8 @@ namespace Bugsense.WPF
                     },
                 new AppEnvironment
                     {
-                        AppName = name.Name,
-                        AppVersion = name.Version.ToString(4),
+                        AppName = entryAssemblyName.Name,
+                        AppVersion = entryAssemblyName.Version.ToString(4),
                         OsVersion = "7.0.7389"
                     }
                 );
