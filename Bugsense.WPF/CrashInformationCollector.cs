@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Text;
 
 namespace Bugsense.WPF
 {
@@ -11,13 +12,15 @@ namespace Bugsense.WPF
             var entryAssemblyName = Assembly.GetEntryAssembly().GetName();
             var operatingSystem = Environment.OSVersion;
 
+            var fullStacktrace = GetStackTrace(exception);
+
             return new BugSenseRequest(
                 new BugSenseEx
                     {
                         ExceptionType = exception.GetType().ToString(),
                         Message = exception.Message,
                         DateOccured = DateTime.Now,
-                        StackTrace = exception.StackTrace
+                        StackTrace = fullStacktrace
                     },
                 new AppEnvironment
                     {
@@ -26,6 +29,17 @@ namespace Bugsense.WPF
                         OsVersion = operatingSystem.Version.ToString(4)
                     }
                 );
+        }
+
+        // TODO: This appends the stacktraces in the reverse order compared to Exception.ToString()...? Use the same order?
+        private static string GetStackTrace(Exception exception)
+        {
+            var sb = new StringBuilder();
+            for (var ex = exception; ex != null; ex = ex.InnerException)
+            {
+                sb.AppendLine(string.IsNullOrEmpty(ex.StackTrace) ? "not available" : ex.StackTrace);
+            }
+            return sb.ToString().Trim();
         }
     }
 }

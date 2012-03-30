@@ -15,7 +15,14 @@ namespace SampleApplication
     {
         public override void Execute(object parameter)
         {
-            CrashHelper.Crash();
+            try
+            {
+                CrashHelper.Crash();
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ApplicationException("An exception was thrown", ex);
+            }
         }
     }
 

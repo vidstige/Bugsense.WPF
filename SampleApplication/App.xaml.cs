@@ -12,7 +12,7 @@ namespace SampleApplication
 
         public App()
         {
-            BugSense.Init(this, bugsenseApiKey);
+            BugSense.Init(bugsenseApiKey);
         }
     }
 }
