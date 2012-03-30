@@ -31,8 +31,6 @@ namespace Bugsense.WPF
             var json = new MemoryStream();
             using (var requestStream = new StreamWriter(stream))
             {
-                //requestStream.Write("data=" + Uri.EscapeUriString(errorJson));
-                
                 requestStream.Write("data=");
                 requestStream.Flush();
 

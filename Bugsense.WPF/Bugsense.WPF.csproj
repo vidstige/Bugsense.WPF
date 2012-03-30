@@ -50,7 +50,6 @@
     <Compile Include="CrashInformationCollector.cs" />
     <Compile Include="ErrorReport.cs" />
     <Compile Include="ErrorSender.cs" />
-    <Compile Include="ExceptionWatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

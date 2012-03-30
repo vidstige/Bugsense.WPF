@@ -49,7 +49,7 @@ namespace Bugsense.WPF
     public class BugSenseRequest
     {
         public BugSenseRequest() { }
-        public BugSenseRequest(BugSenseEx ex, AppEnvironment environment, BugSenseClient bugSenseClient)
+        public BugSenseRequest(BugSenseEx ex, AppEnvironment environment)
         {
             Client = new BugSenseClient();
             Request = new BugSenseInternalRequest();
@@ -73,8 +73,8 @@ namespace Bugsense.WPF
 
         public BugSenseClient()
         {
-            //Version = "bugsense-version-0.6";
-            //Name = "bugsense-wp7";
+            Name = "bugsense-wpf";
+            Version = GetType().Assembly.GetName().Version.ToString(4);
         }
 
         [DataMember(Name = "version")]
