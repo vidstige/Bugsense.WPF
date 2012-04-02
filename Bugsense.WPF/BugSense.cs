@@ -18,7 +18,6 @@ namespace Bugsense.WPF
 
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            // Don't send exceptions when the debugger is attached
             if (!Debugger.IsAttached)
             {
                 SendException((Exception) e.ExceptionObject);

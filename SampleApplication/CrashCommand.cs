@@ -17,12 +17,39 @@ namespace SampleApplication
         {
             try
             {
-                CrashHelper.Crash();
+                try
+                {
+                    ThrowApplicationException("Inner");
+                }
+                catch (ApplicationException ex)
+                {
+                    ThrowApplicationException("Middle", ex);
+                }
             }
-            catch (ArgumentException ex)
+            catch (ApplicationException ex)
             {
-                throw new ApplicationException("An exception was thrown", ex);
+                ThrowApplicationException("Outer", ex);
             }
+        }
+
+        private void ThrowApplicationException(string message, Exception innerException)
+        {
+            FillTheStacktrace(message, innerException);
+        }
+
+        private static void FillTheStacktrace(string message, Exception innerException)
+        {
+            throw new ApplicationException(message, innerException);
+        }
+
+        private static void ThrowApplicationException(string message)
+        {
+            ThisMessageJustFillsTheInnerStacktrace(message);
+        }
+
+        private static void ThisMessageJustFillsTheInnerStacktrace(string message)
+        {
+            throw new ApplicationException(message);
         }
     }
 

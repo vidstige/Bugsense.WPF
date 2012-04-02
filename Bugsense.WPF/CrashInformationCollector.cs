@@ -31,15 +31,19 @@ namespace Bugsense.WPF
                 );
         }
 
-        // TODO: This appends the stacktraces in the reverse order compared to Exception.ToString()...? Use the same order?
         private static string GetStackTrace(Exception exception)
         {
             var sb = new StringBuilder();
-            for (var ex = exception; ex != null; ex = ex.InnerException)
+            var ex = exception;
+            sb.AppendLine(string.IsNullOrEmpty(ex.StackTrace) ? "not available" : ex.StackTrace);
+            ex = ex.InnerException;
+            while (ex != null)
             {
+                sb.AppendLine(string.Format("Caused by: {0}: {1}", ex.GetType().Name, ex.Message));
                 sb.AppendLine(string.IsNullOrEmpty(ex.StackTrace) ? "not available" : ex.StackTrace);
+                ex = ex.InnerException;
             }
-            return sb.ToString().Trim();
+            return sb.ToString();
         }
     }
 }
