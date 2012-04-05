@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Bugsense.WPF</id>
+    <version>1.0.0</version>
+    <authors>samuel.carlsson</authors>
+    <owners>samuel.carlsson</owners>
+    <projectUrl>https://github.com/vidstige/Bugsense.WPF</projectUrl>
+    <iconUrl>http://www.bugsense.com/static/images/email/small-logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Adds support for sending crash reports to bugsense from Windows Desktop Applications</description>
+    <releaseNotes>This is the first version of Bugsense.WPF</releaseNotes>
+    <copyright>Copyright 2012</copyright>
+  </metadata>
+</package>

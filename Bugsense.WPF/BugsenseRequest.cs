@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Bugsense.WPF
 {
     [DataContract]
-    public class BugSenseEx
+    internal class BugSenseEx
     {
         internal Exception OriginalException { get; set; }
         [DataMember(Name = "message")]
@@ -21,7 +21,7 @@ namespace Bugsense.WPF
     }
 
     [DataContract]
-    public class AppEnvironment
+    internal class AppEnvironment
     {
         [DataMember(Name = "phone")]
         public string PhoneModel { get; set; }
@@ -46,7 +46,7 @@ namespace Bugsense.WPF
     }
 
     [DataContract]
-    public class BugSenseRequest
+    internal class BugSenseRequest
     {
         public BugSenseRequest() { }
         public BugSenseRequest(BugSenseEx ex, AppEnvironment environment)
@@ -68,9 +68,8 @@ namespace Bugsense.WPF
     }
 
     [DataContract]
-    public class BugSenseClient
+    internal class BugSenseClient
     {
-
         public BugSenseClient()
         {
             Name = "bugsense-wpf";
@@ -84,7 +83,7 @@ namespace Bugsense.WPF
     }
 
     [DataContract]
-    public class BugSenseInternalRequest
+    internal class BugSenseInternalRequest
     {
         [DataMember(Name = "comment")]
         public string Comment { get; set; }
