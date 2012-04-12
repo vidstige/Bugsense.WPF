@@ -11,6 +11,22 @@ namespace Bugsense.WPF
     {
         private static ErrorSender errorSender;
         private static CrashInformationCollector informationCollector;
+        private const string bugsenseApiUrl = "http://bugsense.appspot.com/api/errors";
+        
+        /// <summary>
+        /// Hooks up bugsense error sender to the unhandled exception handler. This will cause crashes to be sent
+        /// to bugsense when they occur. This overload is used when customizing the crash report destination. For normal
+        /// use - Use the other Init method.
+        /// </summary>
+        /// <param name="apiKey">This is the API key for bugsense. You need to get *your own* API key from http://bugsense.com/</param>
+        /// <param name="apiUrl">The Url to send the crashes to, only use this if you need to customize the destination</param>
+        public static void Init(string apiKey, string apiUrl)
+        {
+            errorSender = new ErrorSender(apiKey, apiUrl);
+            informationCollector = new CrashInformationCollector();
+
+            AppDomain.CurrentDomain.UnhandledException += UnhandledException;
+        }
 
         /// <summary>
         /// Hooks up bugsense error sender to the unhandled exception handler. This will cause crashes to be sent
@@ -19,10 +35,7 @@ namespace Bugsense.WPF
         /// <param name="apiKey">This is the API key for bugsense. You need to get *your own* API key from http://bugsense.com/</param>
         public static void Init(string apiKey)
         {
-            errorSender = new ErrorSender(apiKey);
-            informationCollector = new CrashInformationCollector();
-
-            AppDomain.CurrentDomain.UnhandledException += UnhandledException;
+            Init(apiKey, bugsenseApiUrl);
         }
 
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)

@@ -8,12 +8,13 @@ namespace Bugsense.WPF
 {
     class ErrorSender
     {
-        private const string apiUrl = "http://bugsense.appspot.com/api/errors";
         private readonly string apiKey;
+        private readonly string apiUrl;
 
-        public ErrorSender(string apiKey)
+        public ErrorSender(string apiKey, string apiUrl)
         {
             this.apiKey = apiKey;
+            this.apiUrl = apiUrl;
         }
 
         private string ToJsonString<T>(T o)
