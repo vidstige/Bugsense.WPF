@@ -18,24 +18,14 @@ namespace Bugsense.WPF
         /// to bugsense when they occur. This overload is used when customizing the crash report destination. For normal
         /// use - Use the other Init method.
         /// </summary>
-        /// <param name="apiKey">This is the API key for bugsense. You need to get *your own* API key from http://bugsense.com/</param>
+        /// <param name="apiKey">This is the API key for bugsense. You need to get *your own* API key from http://bugsense.com/ </param>
         /// <param name="apiUrl">The Url to send the crashes to, only use this if you need to customize the destination</param>
-        public static void Init(string apiKey, string apiUrl)
+        public static void Init(string apiKey, string apiUrl = bugsenseApiUrl)
         {
             errorSender = new ErrorSender(apiKey, apiUrl);
             informationCollector = new CrashInformationCollector();
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledException;
-        }
-
-        /// <summary>
-        /// Hooks up bugsense error sender to the unhandled exception handler. This will cause crashes to be sent
-        /// to bugsense when they occur.
-        /// </summary>
-        /// <param name="apiKey">This is the API key for bugsense. You need to get *your own* API key from http://bugsense.com/</param>
-        public static void Init(string apiKey)
-        {
-            Init(apiKey, bugsenseApiUrl);
         }
 
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)

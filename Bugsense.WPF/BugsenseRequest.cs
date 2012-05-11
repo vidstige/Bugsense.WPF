@@ -48,7 +48,6 @@ namespace Bugsense.WPF
     [DataContract]
     internal class BugSenseRequest
     {
-        public BugSenseRequest() { }
         public BugSenseRequest(BugSenseEx ex, AppEnvironment environment)
         {
             Client = new BugSenseClient();

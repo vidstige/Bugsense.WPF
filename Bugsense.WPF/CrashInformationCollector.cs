@@ -8,7 +8,6 @@ namespace Bugsense.WPF
     {
         public BugSenseRequest CreateCrashReport(Exception exception)
         {
-            // TODO: Handle inner exceptions?
             var entryAssemblyName = Assembly.GetEntryAssembly().GetName();
             var operatingSystem = Environment.OSVersion;
 
