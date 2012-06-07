@@ -18,7 +18,7 @@ namespace Bugsense.WPF
                     {
                         ExceptionType = exception.GetType().ToString(),
                         Message = exception.Message,
-                        DateOccured = DateTime.Now.ToUniversalTime(),
+                        DateOccured = DateTime.UtcNow,
                         StackTrace = fullStacktrace
                     },
                 new AppEnvironment
