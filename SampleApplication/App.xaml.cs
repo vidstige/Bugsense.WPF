@@ -8,7 +8,7 @@ namespace SampleApplication
     /// </summary>
     public partial class App : Application
     {
-        private const string bugsenseApiKey = <api key here>;
+        private const string bugsenseApiKey = "<api key here>";
 
         public App()
         {

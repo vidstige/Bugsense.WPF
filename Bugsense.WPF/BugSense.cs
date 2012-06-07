@@ -39,7 +39,7 @@ namespace Bugsense.WPF
 
         private static void SendException(Exception exception)
         {
-            errorSender.Send(informationCollector.CreateCrashReport(exception));
+            errorSender.SendOrStore(informationCollector.CreateCrashReport(exception));
         }
     }
 }

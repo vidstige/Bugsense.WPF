@@ -44,7 +44,6 @@
     <Compile Include="BugSense.cs" />
     <Compile Include="BugsenseRequest.cs" />
     <Compile Include="CrashInformationCollector.cs" />
-    <Compile Include="ErrorReport.cs" />
     <Compile Include="ErrorSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

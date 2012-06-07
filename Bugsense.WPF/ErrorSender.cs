@@ -1,6 +1,7 @@
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
+using System.Security;
 using System.Text;
 using System;
 
@@ -25,7 +26,36 @@ namespace Bugsense.WPF
             return Encoding.UTF8.GetString(ms.GetBuffer(), 0, (int)ms.Length);
         }
 
-        internal void Send(BugSenseRequest errorReport)
+        internal void SendOrStore(BugSenseRequest errorReport)
+        {
+            string serializedErrorReport = Serialize(errorReport);
+            try
+            {
+                Send(serializedErrorReport);
+            }
+            catch (IOException)
+            {
+                Store(serializedErrorReport);
+            }
+            catch (SecurityException)
+            {
+                Store(serializedErrorReport);
+            }
+        }
+
+        private string Serialize(BugSenseRequest errorReport)
+        {
+            var ms = new MemoryStream();
+            using (var requestStream = new StreamWriter(ms))
+            {
+                requestStream.Write("data=");
+                //requestStream.Flush();
+                requestStream.Write(Uri.EscapeDataString(ToJsonString(errorReport)));
+            }
+            return ms.ToString();
+        }
+
+        private void Send(string serializedErrorReport)
         {
             var request = WebRequest.Create(apiUrl);
 
@@ -33,12 +63,14 @@ namespace Bugsense.WPF
             request.ContentType = "application/x-www-form-urlencoded";
             request.Headers["X-BugSense-Api-Key"] = apiKey;
             var stream = request.GetRequestStream();
-            
+
             using (var requestStream = new StreamWriter(stream))
             {
-                requestStream.Write("data=");
-                requestStream.Flush();
-                requestStream.Write(Uri.EscapeDataString(ToJsonString(errorReport)));
+                requestStream.Write(serializedErrorReport);
+
+                //    requestStream.Write("data=");
+                //    requestStream.Flush();
+                //    requestStream.Write(Uri.EscapeDataString(ToJsonString(errorReport)));
             }
             stream.Close();
 
@@ -54,6 +86,10 @@ namespace Bugsense.WPF
             //    text = streamReader.ReadToEnd();
             //    streamReader.Close();
             //}
+        }
+
+        private void Store(string serializedErrorReport)
+        {
         }
     }
 }
