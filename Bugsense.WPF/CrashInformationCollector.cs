@@ -6,7 +6,7 @@ namespace Bugsense.WPF
 {
     internal class CrashInformationCollector
     {
-        private string _version;
+        private readonly string _version;
 
         public CrashInformationCollector(string version)
         {
