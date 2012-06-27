@@ -90,6 +90,7 @@ namespace Bugsense.WPF
 
         private void Store(string serializedErrorReport)
         {
+
         }
     }
 }

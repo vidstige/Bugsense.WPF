@@ -19,11 +19,12 @@ namespace Bugsense.WPF
         /// use - Use the other Init method.
         /// </summary>
         /// <param name="apiKey">This is the API key for bugsense. You need to get *your own* API key from http://bugsense.com/ </param>
+        /// <param name="version">The version of this application to send in case of a crash. The default value is zero, in this case the version of the entry assebmly will be used. See Assembly.GetEntryAssembly()</param>
         /// <param name="apiUrl">The Url to send the crashes to, only use this if you need to customize the destination</param>
-        public static void Init(string apiKey, string apiUrl = bugsenseApiUrl)
+        public static void Init(string apiKey, string version = null, string apiUrl = bugsenseApiUrl)
         {
             errorSender = new ErrorSender(apiKey, apiUrl);
-            informationCollector = new CrashInformationCollector();
+            informationCollector = new CrashInformationCollector(version);
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledException;
         }

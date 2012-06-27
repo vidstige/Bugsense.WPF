@@ -6,6 +6,13 @@ namespace Bugsense.WPF
 {
     internal class CrashInformationCollector
     {
+        private string _version;
+
+        public CrashInformationCollector(string version)
+        {
+            _version = version;
+        }
+        
         public BugSenseRequest CreateCrashReport(Exception exception)
         {
             var entryAssemblyName = Assembly.GetEntryAssembly().GetName();
@@ -24,7 +31,7 @@ namespace Bugsense.WPF
                 new AppEnvironment
                     {
                         AppName = entryAssemblyName.Name,
-                        AppVersion = entryAssemblyName.Version.ToString(4),
+                        AppVersion = _version ?? entryAssemblyName.Version.ToString(4),
                         OsVersion = operatingSystem.Version.ToString(4)
                     }
                 );
