@@ -34,7 +34,7 @@ namespace Bugsense.WPF
         /// </summary>
         public static void AttachHandler()
         {
-            AppDomain.CurrentDomain.UnhandledException -= UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += UnhandledException;
         }
         /// <summary>
         /// Detaches the eventhandler from AppDomain.CurrentDomain.UnhandledException. Useful if you want to send exceptions
