@@ -26,21 +26,42 @@ namespace Bugsense.WPF
             errorSender = new ErrorSender(apiKey, apiUrl);
             informationCollector = new CrashInformationCollector(version);
 
-            AppDomain.CurrentDomain.UnhandledException += UnhandledException;
+            AttachHandler();
+        }
+
+        /// <summary>
+        /// Attaches the eventhandler from AppDomain.CurrentDomain.UnhandledException. Done Automatically by the BugSense.Init method.
+        /// </summary>
+        public static void AttachHandler()
+        {
+            AppDomain.CurrentDomain.UnhandledException -= UnhandledException;
+        }
+        /// <summary>
+        /// Detaches the eventhandler from AppDomain.CurrentDomain.UnhandledException. Useful if you want to send exceptions
+        /// </summary>
+        public static void DetachHandler()
+        {
+            AppDomain.CurrentDomain.UnhandledException -= UnhandledException;
+        }
+
+        /// <summary>
+        /// Sends an exception to bugsense as if a crash occured. Useful for handling the UnhandledException manually.
+        /// </summary>
+        /// <param name="exception">The exception to send to BugSense</param>
+        /// <exception cref="InvalidOperationException">Thrown if the Bugsense.Init method is not called before this method</exception>
+        public static void SendException(Exception exception)
+        {
+            if (errorSender == null) throw new InvalidOperationException("BugSense.Init must be called before this method may be called");
+            errorSender.SendOrStore(informationCollector.CreateCrashReport(exception));
         }
 
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             if (!Debugger.IsAttached)
             {
-                SendException((Exception) e.ExceptionObject);
+                SendException((Exception)e.ExceptionObject);
             }
             Environment.Exit(-1);
-        }
-
-        private static void SendException(Exception exception)
-        {
-            errorSender.SendOrStore(informationCollector.CreateCrashReport(exception));
         }
     }
 }
