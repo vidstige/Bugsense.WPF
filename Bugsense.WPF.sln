@@ -13,6 +13,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{D242F5ED-0798-4B40-A4FF-FAF185639B9B}"
 	ProjectSection(SolutionItems) = preProject
 		nuget\Bugsense.WPF.dll.nuspec = nuget\Bugsense.WPF.dll.nuspec
+		Instructions.txt = Instructions.txt
 	EndProjectSection
 EndProject
 Global

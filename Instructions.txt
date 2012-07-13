@@ -1,0 +1,12 @@
+1. Set API key
+NuGet SetApiKey Your-API-Key
+
+2. Update version numbers in .nuspec file and AssemblyInfo.cs
+
+3. Build assembly
+
+2. Pack it up
+NuGet Pack YourPackage.nuspec
+
+3. Publish Package
+NuGet Push Bugsense.WPF.?.?.?.nupkg
