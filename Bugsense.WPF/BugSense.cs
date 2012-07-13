@@ -37,7 +37,7 @@ namespace Bugsense.WPF
             AppDomain.CurrentDomain.UnhandledException += UnhandledException;
         }
         /// <summary>
-        /// Detaches the eventhandler from AppDomain.CurrentDomain.UnhandledException. Useful if you want to send exceptions
+        /// Detaches the eventhandler from AppDomain.CurrentDomain.UnhandledException. Useful if you want to send exceptions your self.
         /// </summary>
         public static void DetachHandler()
         {
@@ -61,7 +61,6 @@ namespace Bugsense.WPF
             {
                 SendException((Exception)e.ExceptionObject);
             }
-            Environment.Exit(-1);
         }
     }
 }

@@ -49,7 +49,6 @@ namespace Bugsense.WPF
             using (var requestStream = new StreamWriter(ms))
             {
                 requestStream.Write("data=");
-                //requestStream.Flush();
                 requestStream.Write(Uri.EscapeDataString(ToJsonString(errorReport)));
             }
             return ms.ToString();
@@ -62,17 +61,12 @@ namespace Bugsense.WPF
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.Headers["X-BugSense-Api-Key"] = apiKey;
-            var stream = request.GetRequestStream();
-
+            
+            using (var stream = request.GetRequestStream())
             using (var requestStream = new StreamWriter(stream))
             {
                 requestStream.Write(serializedErrorReport);
-
-                //    requestStream.Write("data=");
-                //    requestStream.Flush();
-                //    requestStream.Write(Uri.EscapeDataString(ToJsonString(errorReport)));
             }
-            stream.Close();
 
             var response = request.GetResponse();
 
@@ -90,7 +84,6 @@ namespace Bugsense.WPF
 
         private void Store(string serializedErrorReport)
         {
-
         }
     }
 }
