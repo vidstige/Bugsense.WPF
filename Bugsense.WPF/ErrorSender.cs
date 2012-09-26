@@ -9,13 +9,13 @@ namespace Bugsense.WPF
 {
     class ErrorSender
     {
-        private readonly string apiKey;
-        private readonly string apiUrl;
+        private readonly string _apiKey;
+        private readonly string _apiUrl;
 
         public ErrorSender(string apiKey, string apiUrl)
         {
-            this.apiKey = apiKey;
-            this.apiUrl = apiUrl;
+            _apiKey = apiKey;
+            _apiUrl = apiUrl;
         }
 
         private string ToJsonString<T>(T o)
@@ -51,16 +51,16 @@ namespace Bugsense.WPF
                 requestStream.Write("data=");
                 requestStream.Write(Uri.EscapeDataString(ToJsonString(errorReport)));
             }
-            return ms.ToString();
+            return Encoding.UTF8.GetString(ms.ToArray());
         }
 
         private void Send(string serializedErrorReport)
         {
-            var request = WebRequest.Create(apiUrl);
+            var request = WebRequest.Create(_apiUrl);
 
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
-            request.Headers["X-BugSense-Api-Key"] = apiKey;
+            request.Headers["X-BugSense-Api-Key"] = _apiKey;
             
             using (var stream = request.GetRequestStream())
             using (var requestStream = new StreamWriter(stream))
@@ -70,6 +70,12 @@ namespace Bugsense.WPF
 
             var response = request.GetResponse();
 
+            //var content = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            //Console.WriteLine(content);
+            //foreach (var header in response.Headers)
+            //{
+            //    Console.WriteLine(header);
+            //}
             // TODO: Handle response...?
 
             //string text = string.Empty;
