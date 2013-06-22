@@ -2,14 +2,14 @@
 <package >
   <metadata>
     <id>Bugsense.WPF</id>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <authors>samuel.carlsson</authors>
     <owners>samuel.carlsson</owners>
     <projectUrl>https://github.com/vidstige/Bugsense.WPF</projectUrl>
     <iconUrl>http://www.bugsense.com/static/images/email/small-logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Adds support for sending crash reports to bugsense from Windows Desktop Applications</description>
-    <releaseNotes>Adding support for sending exceptions manually</releaseNotes>
-    <copyright>Copyright 2012</copyright>
+    <releaseNotes>Strong signing assembly</releaseNotes>
+    <copyright>Copyright Vidstige 2013</copyright>
   </metadata>
 </package>
