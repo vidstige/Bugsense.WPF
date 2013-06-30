@@ -1,0 +1,21 @@
+1. Set API key
+NuGet SetApiKey Your-API-Key
+
+2. Update version numbers in .nuspec file and AssemblyInfo.cs
+
+3. Build assembly
+
+4. Sign assembly
+ildasm /all /out=tmp.il lib\net40\Bugsense.WPF.dll
+ilasm /dll /key=..\..\VidstigeDotNetSigning.snk /OUTPU
+T=lib\net40\Bugsense.WPF.dll tmp.il
+erase tmp.il
+
+5. Validate signing
+sn -vf lib\net40\Bugsense.WPF.dll
+
+6. Pack it up
+NuGet Pack Bugsense.Wpf.nuspec
+
+7. Publish Package
+NuGet Push Bugsense.WPF.?.?.?.nupkg
