@@ -10,12 +10,14 @@ namespace Bugsense.WPF
     class ErrorSender
     {
         private readonly string _apiKey;
-        private readonly string _apiUrl;
+        private readonly Uri _apiUri;
+        private readonly IWebRequestCreate _webRequestCreator;
 
-        public ErrorSender(string apiKey, string apiUrl)
+        public ErrorSender(string apiKey, Uri apiUri, IWebRequestCreate webRequestCreator)
         {
             _apiKey = apiKey;
-            _apiUrl = apiUrl;
+            _apiUri = apiUri;
+            _webRequestCreator = webRequestCreator;
         }
 
         private string ToJsonString<T>(T o)
@@ -56,7 +58,7 @@ namespace Bugsense.WPF
 
         private void Send(string serializedErrorReport)
         {
-            var request = WebRequest.Create(_apiUrl);
+            var request = _webRequestCreator.Create(_apiUri);
 
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";

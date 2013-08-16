@@ -23,7 +23,7 @@ namespace Bugsense.WPF
         /// <param name="apiUrl">The Url to send the crashes to, only use this if you need to customize the destination</param>
         public static void Init(string apiKey, string version = null, string apiUrl = BugsenseApiUrl)
         {
-            _errorSender = new ErrorSender(apiKey, apiUrl);
+            _errorSender = new ErrorSender(apiKey, new Uri(apiUrl), new WebRequestCreator());
             _informationCollector = new CrashInformationCollector(version);
 
             AttachHandler();

@@ -55,6 +55,7 @@
     <Compile Include="CrashInformationCollector.cs" />
     <Compile Include="ErrorSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebRequestCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="VidstigeDotNetSigning.snk" />
