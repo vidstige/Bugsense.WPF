@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{D242F5ED
 		Instructions.txt = Instructions.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugsense.WP.tests", "Bugsense.WP.tests\Bugsense.WP.tests.csproj", "{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,16 @@ Global
 		{D02DC379-52BD-4A49-8C16-00F3B928B60B}.Release|Mixed Platforms.Build.0 = Release|x86
 		{D02DC379-52BD-4A49-8C16-00F3B928B60B}.Release|x86.ActiveCfg = Release|x86
 		{D02DC379-52BD-4A49-8C16-00F3B928B60B}.Release|x86.Build.0 = Release|x86
+		{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
