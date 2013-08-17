@@ -6,16 +6,18 @@ namespace Bugsense.WPF
 {
     internal class CrashInformationCollector
     {
+        private readonly IAssemblyRepository _assemblyRepository;
         private readonly string _version;
 
-        public CrashInformationCollector(string version)
+        public CrashInformationCollector(IAssemblyRepository assemblyRepository, string version = null)
         {
+            _assemblyRepository = assemblyRepository;
             _version = version;
         }
         
         public BugSenseRequest CreateCrashReport(Exception exception)
         {
-            var entryAssemblyName = Assembly.GetEntryAssembly().GetName();
+            var entryAssemblyName = _assemblyRepository.GetEntryAssembly().GetName();
             var operatingSystem = Environment.OSVersion;
 
             var fullStacktrace = GetStackTrace(exception);

@@ -24,7 +24,7 @@ namespace Bugsense.WPF
         public static void Init(string apiKey, string version = null, string apiUrl = BugsenseApiUrl)
         {
             _errorSender = new ErrorSender(apiKey, new Uri(apiUrl), new WebRequestCreator());
-            _informationCollector = new CrashInformationCollector(version);
+            _informationCollector = new CrashInformationCollector(new AssemblyRepository(), version);
 
             AttachHandler();
         }
