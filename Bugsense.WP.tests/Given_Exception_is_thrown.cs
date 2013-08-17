@@ -26,6 +26,43 @@ namespace Bugsense.WP.tests
         }
     }
 
+    class FakeWebRequest : WebRequest 
+    {
+        private readonly WebHeaderCollection _headers = new WebHeaderCollection();
+        
+        public override WebHeaderCollection Headers
+        {
+            get { return _headers; }
+        }
+
+        public override string Method
+        {
+            set { }
+        }
+        public override string ContentType
+        {
+            set { }
+        }
+
+        public override Stream GetRequestStream()
+        {
+            return new MemoryStream();
+        }
+
+        public override WebResponse GetResponse()
+        {
+            return null;
+        }
+    }
+
+    class FakeWebRequestCreator: IWebRequestCreate
+    {
+        public WebRequest Create(Uri uri)
+        {
+            return new FakeWebRequest();
+        }
+    }
+
     [TestClass]
     public class Given_Exception_is_thrown
     {
@@ -33,20 +70,11 @@ namespace Bugsense.WP.tests
         public void When_Sending()
         {
             var uri = new Uri("http://api.example.com/v1/crash");
-            var request = new Mock<WebRequest>();
-            request.SetupAllProperties();
-            request.Object.Headers = new WebHeaderCollection();
-            var result = new MemoryStream();
-            request.Setup(r => r.GetRequestStream()).Returns(result);
-
-                        var webRequestCreator = new Mock<IWebRequestCreate>();
-            webRequestCreator.Setup(c => c.Create(uri)).Returns(request.Object);
-
             var assemblyRepository = new FakeAssemblyRepository();
-
             var ex = new ArgumentException("message");
+            var webRequestCreator = new FakeWebRequestCreator();
 
-            var errorSender = new ErrorSender(null, uri, webRequestCreator.Object);
+            var errorSender = new ErrorSender(null, uri, webRequestCreator);
             errorSender.SendOrStore(new CrashInformationCollector(assemblyRepository, null).CreateCrashReport(ex));
         }
     }
