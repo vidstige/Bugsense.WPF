@@ -8,6 +8,14 @@ using System.Reflection;
 
 namespace Bugsense.WP.tests
 {
+    class FakeAssemblyRepository : IAssemblyRepository
+    {
+        public Assembly GetEntryAssembly()
+        {
+            return new FakeAssembly();
+        }
+    }
+
     class FakeAssembly : Assembly
     {
         public override AssemblyName GetName()
@@ -34,13 +42,12 @@ namespace Bugsense.WP.tests
                         var webRequestCreator = new Mock<IWebRequestCreate>();
             webRequestCreator.Setup(c => c.Create(uri)).Returns(request.Object);
 
-            var assemblyRepository = new Mock<IAssemblyRepository>();
-            assemblyRepository.Setup(r => r.GetEntryAssembly()).Returns(new FakeAssembly());
+            var assemblyRepository = new FakeAssemblyRepository();
 
             var ex = new ArgumentException("message");
 
             var errorSender = new ErrorSender(null, uri, webRequestCreator.Object);
-            errorSender.SendOrStore(new CrashInformationCollector(assemblyRepository.Object, null).CreateCrashReport(ex));
+            errorSender.SendOrStore(new CrashInformationCollector(assemblyRepository, null).CreateCrashReport(ex));
         }
     }
 }
