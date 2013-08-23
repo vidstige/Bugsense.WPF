@@ -6,7 +6,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 
-namespace Bugsense.WP.tests
+namespace Bugsense.WPF.tests
 {
     class FakeAssemblyRepository : IAssemblyRepository
     {

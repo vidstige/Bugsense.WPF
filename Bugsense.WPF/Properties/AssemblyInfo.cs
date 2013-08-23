@@ -36,4 +36,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.5.0")]
 
 // Allow the test assembly to access internal classes
-[assembly: InternalsVisibleTo("Bugsense.WP.tests")]
+[assembly: InternalsVisibleTo("Bugsense.WPF.tests")]

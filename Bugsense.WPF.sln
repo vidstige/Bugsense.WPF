@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{D242F5ED
 		Instructions.txt = Instructions.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugsense.WP.tests", "Bugsense.WP.tests\Bugsense.WP.tests.csproj", "{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugsense.FWP.tests", "Bugsense.WPF.tests\Bugsense.WPF.tests.csproj", "{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,8 +7,8 @@
     <ProjectGuid>{5FBB43AC-9868-4E4C-B8C6-112DDE900F39}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bugsense.WP.tests</RootNamespace>
-    <AssemblyName>Bugsense.WP.tests</AssemblyName>
+    <RootNamespace>Bugsense.WPF.tests</RootNamespace>
+    <AssemblyName>Bugsense.WPF.tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
