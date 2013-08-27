@@ -2,9 +2,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Bugsense.WPF.tests
 {
@@ -29,7 +34,17 @@ namespace Bugsense.WPF.tests
     class FakeWebRequest : WebRequest 
     {
         private readonly WebHeaderCollection _headers = new WebHeaderCollection();
-        
+        private readonly MemoryStream _requestStream = new MemoryStream();
+        private readonly Uri _requestUri;
+        private string _actualRequest;        
+
+        public FakeWebRequest(Uri uri)
+        {
+            _requestUri = uri;
+        }
+
+        public override Uri RequestUri { get { return _requestUri; } }
+
         public override WebHeaderCollection Headers
         {
             get { return _headers; }
@@ -46,21 +61,35 @@ namespace Bugsense.WPF.tests
 
         public override Stream GetRequestStream()
         {
-            return new MemoryStream();
+            return _requestStream;
         }
 
         public override WebResponse GetResponse()
         {
+            _actualRequest = Encoding.UTF8.GetString(_requestStream.ToArray());
             return null;
         }
+
+        public string ActualRequest { get { return _actualRequest; } }
     }
 
     class FakeWebRequestCreator: IWebRequestCreate
     {
+        private readonly IList<FakeWebRequest> _requests = new List<FakeWebRequest>();
+
         public WebRequest Create(Uri uri)
         {
-            return new FakeWebRequest();
+            var request = new FakeWebRequest(uri);
+            _requests.Add(request);
+            return request;
         }
+
+        public string GetActualRequest(Uri uri)
+        {
+            var request = _requests.FirstOrDefault<FakeWebRequest>(r => r.RequestUri == uri);
+            Assert.IsNotNull(request, "No request was sent to " + uri);
+            return request.ActualRequest;
+        }       
     }
 
     [TestClass]
@@ -76,6 +105,19 @@ namespace Bugsense.WPF.tests
 
             var errorSender = new ErrorSender(null, uri, webRequestCreator);
             errorSender.SendOrStore(new CrashInformationCollector(assemblyRepository, null).CreateCrashReport(ex));
+            
+            var bugsenseRequest = webRequestCreator.GetActualRequest(uri);
+            Assert.IsTrue(bugsenseRequest.StartsWith("data="), "Expected request to start with 'data='");
+            var jsonString = Uri.UnescapeDataString(bugsenseRequest.Substring("data=".Length));
+            var json = JObject.Parse(jsonString);
+
+            Verify(json, "application_environment.appname", "FakeAssembly");
+        }
+
+        private void Verify(JObject root, string path, string expectedValue)
+        {
+            var jsonNode = root.Descendants().Single(n => n.Path == path);
+            Assert.AreEqual(expectedValue, jsonNode.ToString());
         }
     }
 }
