@@ -46,36 +46,28 @@ namespace Bugsense.WPF.tests
         public void AppName_is_entry_assemblyname()
         {
             SendOrStore(new ArgumentException("message"));
-
-            var json = GetSentJson();
-            json.Verify("application_environment.appname", "FakeAssembly");
+            GetSentJson().Verify("application_environment.appname", "FakeAssembly");
         }
 
         [TestMethod]
         public void Appver_is_set()
         {
             SendOrStore(new ArgumentException("message"));
-
-            var json = GetSentJson();
-            json.Verify("application_environment.appver", "1.2.3.4");
+            GetSentJson().Verify("application_environment.appver", "1.2.3.4");
         }
 
         [TestMethod]
         public void Exception_class_name_is_set()
         {
             SendOrStore(new ArgumentException("message"));
-
-            var json = GetSentJson();
-            json.Verify("exception.klass", "System.ArgumentException");
+            GetSentJson().Verify("exception.klass", "System.ArgumentException");
         }
 
         [TestMethod]
         public void Exception_message_is_set()
         {
             SendOrStore(new ArgumentException("my message"));
-
-            var json = GetSentJson();
-            json.Verify("exception.message", "my message");
+            GetSentJson().Verify("exception.message", "my message");
         }
 
         private void SendOrStore(Exception ex)
