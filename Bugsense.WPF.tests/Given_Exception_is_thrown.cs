@@ -1,15 +1,12 @@
-﻿using Bugsense.WPF;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Bugsense.WPF.tests
 {
@@ -111,13 +108,7 @@ namespace Bugsense.WPF.tests
             var jsonString = Uri.UnescapeDataString(bugsenseRequest.Substring("data=".Length));
             var json = JObject.Parse(jsonString);
 
-            Verify(json, "application_environment.appname", "FakeAssembly");
-        }
-
-        private void Verify(JObject root, string path, string expectedValue)
-        {
-            var jsonNode = root.Descendants().Single(n => n.Path == path);
-            Assert.AreEqual(expectedValue, jsonNode.ToString());
+            json.Verify("application_environment.appname", "FakeAssembly");
         }
     }
 }
