@@ -31,23 +31,39 @@ namespace Bugsense.WPF.tests
     [TestClass]
     public class Given_Exception_is_thrown
     {
+        private Uri _uri; 
+        private FakeWebRequestCreator _webRequestCreator;
+        private readonly FakeAssemblyRepository assemblyRepository = new FakeAssemblyRepository();
+
+        [TestInitialize]
+        public void Init()
+        {
+            _uri = new Uri("http://api.example.com/v1/crash");
+            _webRequestCreator = new FakeWebRequestCreator();
+        }
+
         [TestMethod]
         public void When_Sending()
         {
-            var uri = new Uri("http://api.example.com/v1/crash");
-            var assemblyRepository = new FakeAssemblyRepository();
             var ex = new ArgumentException("message");
-            var webRequestCreator = new FakeWebRequestCreator();
+            SendOrStore(ex);
 
-            var errorSender = new ErrorSender(null, uri, webRequestCreator);
+            var json = GetSentJson();
+            json.Verify("application_environment.appname", "FakeAssembly");
+        }
+
+        private void SendOrStore(Exception ex)
+        {
+            var errorSender = new ErrorSender(null, _uri, _webRequestCreator);
             errorSender.SendOrStore(new CrashInformationCollector(assemblyRepository, null).CreateCrashReport(ex));
-            
-            var bugsenseRequest = webRequestCreator.GetActualRequest(uri);
+        }
+
+        private JObject GetSentJson()
+        {
+            var bugsenseRequest = _webRequestCreator.GetActualRequest(_uri);
             Assert.IsTrue(bugsenseRequest.StartsWith("data="), "Expected request to start with 'data='");
             var jsonString = Uri.UnescapeDataString(bugsenseRequest.Substring("data=".Length));
-            var json = JObject.Parse(jsonString);
-
-            json.Verify("application_environment.appname", "FakeAssembly");
+            return JObject.Parse(jsonString);
         }
     }
 }
