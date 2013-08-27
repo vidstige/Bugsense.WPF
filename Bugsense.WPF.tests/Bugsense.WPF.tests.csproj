@@ -42,7 +42,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeWebRequest.cs" />
+    <Compile Include="FakeWebRequestCreator.cs" />
     <Compile Include="Given_Exception_is_thrown.cs" />
+    <Compile Include="JsonUnitTestExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
