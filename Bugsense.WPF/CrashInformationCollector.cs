@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using System.Text;
 
 namespace Bugsense.WPF
@@ -18,7 +17,7 @@ namespace Bugsense.WPF
         public BugSenseRequest CreateCrashReport(Exception exception)
         {
             var entryAssemblyName = _assemblyRepository.GetEntryAssembly().GetName();
-            var operatingSystem = Environment.OSVersion;
+            var operatingSystem = GetOSName(Environment.OSVersion);
 
             var fullStacktrace = GetStackTrace(exception);
 
@@ -34,9 +33,36 @@ namespace Bugsense.WPF
                     {
                         AppName = entryAssemblyName.Name,
                         AppVersion = _version ?? entryAssemblyName.Version.ToString(4),
-                        OsVersion = operatingSystem.Version.ToString(4)
+                        OsVersion = operatingSystem
                     }
                 );
+        }
+
+        private static string GetOSName(OperatingSystem os)
+        {
+            Version version = os.Version;
+
+            // perform simple detection of OS
+            // TODO: more sophisticated detection; Windows 7 and Server 2008 have the same major/minor version number 
+            string release;
+            if (version.Major == 5 && version.Minor == 1)
+                release = "XP";
+            else if (version.Major == 5 && version.Minor == 2)
+                release = "Server 2003";
+            else if (version.Major == 6 && version.Minor == 0)
+                release = "Vista";
+            else if (version.Major == 6 && version.Minor == 1)
+                release = "7";
+            else if (version.Major == 6 && version.Minor == 2)
+                release = "8";
+            else if (version.Major == 6 && version.Minor == 3)
+                release = "8.1";
+            else
+                release = version.ToString();
+
+            string servicePack = string.IsNullOrEmpty(os.ServicePack) ? "" : (" " + os.ServicePack.Replace("Service Pack ", "SP"));
+
+            return "Windows " + release + servicePack;
         }
 
         private static string GetStackTrace(Exception exception)
