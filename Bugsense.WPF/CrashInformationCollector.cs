@@ -62,7 +62,7 @@ namespace Bugsense.WPF
 
             string servicePack = string.IsNullOrEmpty(os.ServicePack) ? "" : (" " + os.ServicePack.Replace("Service Pack ", "SP"));
 
-            return "Windows " + release + servicePack;
+            return release + servicePack;
         }
 
         private static string GetStackTrace(Exception exception)
