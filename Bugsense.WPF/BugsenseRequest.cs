@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Bugsense.WPF
@@ -48,10 +49,10 @@ namespace Bugsense.WPF
     [DataContract]
     internal class BugSenseRequest
     {
-        public BugSenseRequest(BugSenseEx ex, AppEnvironment environment)
+        public BugSenseRequest(BugSenseEx ex, AppEnvironment environment, JsonDictionary<string, string> customData)
         {
             Client = new BugSenseClient();
-            Request = new BugSenseInternalRequest();
+            Request = new BugSenseInternalRequest() { CustomData = customData };
             //Request.Comment = string.IsNullOrEmpty(ex.Comment) ? ex.Message : ex.Comment;
             Exception = ex;
             AppEnvironment = environment;
@@ -84,7 +85,10 @@ namespace Bugsense.WPF
     [DataContract]
     internal class BugSenseInternalRequest
     {
-        [DataMember(Name = "comment")]
-        public string Comment { get; set; }
+        //[DataMember(Name = "comment")]
+        //public string Comment { get; set; }
+
+        [DataMember(Name = "custom_data")]
+        public JsonDictionary<String, String> CustomData { get; set; }
     }
 }

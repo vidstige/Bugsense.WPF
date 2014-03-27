@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Bugsense.WPF
@@ -21,6 +22,8 @@ namespace Bugsense.WPF
 
             var fullStacktrace = GetStackTrace(exception);
 
+            var customData = new JsonDictionary<string, string>();
+
             return new BugSenseRequest(
                 new BugSenseEx
                     {
@@ -34,7 +37,8 @@ namespace Bugsense.WPF
                         AppName = entryAssemblyName.Name,
                         AppVersion = _version ?? entryAssemblyName.Version.ToString(4),
                         OsVersion = operatingSystem
-                    }
+                    },
+                customData
                 );
         }
 
