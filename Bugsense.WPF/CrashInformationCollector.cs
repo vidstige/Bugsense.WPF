@@ -8,6 +8,7 @@ namespace Bugsense.WPF
     {
         private readonly IAssemblyRepository _assemblyRepository;
         private readonly string _version;
+        private readonly JsonDictionary<string, string> _customData = new JsonDictionary<string, string>();
 
         public CrashInformationCollector(IAssemblyRepository assemblyRepository, string version = null)
         {
@@ -21,8 +22,6 @@ namespace Bugsense.WPF
             var operatingSystem = GetOSName(Environment.OSVersion);
 
             var fullStacktrace = GetStackTrace(exception);
-
-            var customData = new JsonDictionary<string, string>();
 
             return new BugSenseRequest(
                 new BugSenseEx
@@ -38,9 +37,11 @@ namespace Bugsense.WPF
                         AppVersion = _version ?? entryAssemblyName.Version.ToString(4),
                         OsVersion = operatingSystem
                     },
-                customData
+                _customData
                 );
         }
+
+        internal JsonDictionary<string, string> CustomData { get { return _customData; } }
 
         private static string GetOSName(OperatingSystem os)
         {

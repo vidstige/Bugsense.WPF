@@ -13,6 +13,8 @@ namespace SampleApplication
         public App()
         {
             BugSense.Init(BugsenseApiKey);
+            BugSense.AddExtra("foo", "bar");
+            BugSense.AddExtra("bacon", "awesome");
         }
     }
 }

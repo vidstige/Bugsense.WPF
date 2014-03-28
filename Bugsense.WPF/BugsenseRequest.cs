@@ -57,14 +57,15 @@ namespace Bugsense.WPF
             Exception = ex;
             AppEnvironment = environment;
         }
-        [DataMember(Name = "exception")]
-        public BugSenseEx Exception { get; set; }
-        [DataMember(Name = "application_environment")]
-        public AppEnvironment AppEnvironment { get; set; }
         [DataMember(Name = "client")]
         public BugSenseClient Client { get; set; }
         [DataMember(Name = "request")]
         public BugSenseInternalRequest Request { get; set; }
+        [DataMember(Name = "application_environment")]
+        public AppEnvironment AppEnvironment { get; set; }
+        [DataMember(Name = "exception")]
+        public BugSenseEx Exception { get; set; }
+
     }
 
     [DataContract]
