@@ -1,3 +1,17 @@
+Discontinued
+============
+This library has ben discontinued in favor for the official Bugsense for WPF library found here:
+https://www.nuget.org/packages/BugSense.WPF.Official/
+
+This will still be available on NuGet
+
+Advantages over the official library
+* Open Source
+
+Disadvantages
+* Does not have all the features of the official library
+
+
 Bugsense.WPF
 ============
 
